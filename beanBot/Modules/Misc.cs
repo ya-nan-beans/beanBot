@@ -254,8 +254,8 @@ namespace beanBot.Modules
             uint xpReached = level * level * 25;
             uint xpInNextLevel = (level + 1) * (level + 1) * 25; // xp = (level^2)*25 // level = sqrt(xp/25)
             uint xpLeft = xpInNextLevel - XP;
-            uint xpSinceLastLevel = XP - xpReached;
-            double fracOfLevelDone = XP / xpInNextLevel;
+            //uint xpSinceLastLevel = XP - xpReached;
+            double fracOfLevelDone = XP / (double)xpInNextLevel;
             double roundedFrac = Math.Round(fracOfLevelDone, 1);
             int size = (int)(roundedFrac * 10);
             int index = 0;
@@ -276,6 +276,7 @@ namespace beanBot.Modules
             embed.WithTitle($"Profile of {Context.User.Username}");
             embed.WithThumbnailUrl(Context.User.GetAvatarUrl());
             embed.AddInlineField("Cash", account.Cash.ToString());
+            embed.AddInlineField("XP", account.XP.ToString());
             embed.AddField($"Level {level.ToString()} - {xpLeft.ToString()} XP to level {(level + 1).ToString()}", progBar);
 
             await Context.Channel.SendMessageAsync("", false, embed);

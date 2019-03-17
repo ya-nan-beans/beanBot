@@ -24,20 +24,6 @@ namespace beanBot.Core.LevellingSystem
             userAccount = UserAccounts.UserAccounts.GetAccount(context.User);
             if (oldLevel != userAccount.LevelNum)
             {
-
-                string json = "";
-                Random rnd = new Random();
-                using (WebClient client = new WebClient())
-                {
-                    json = client.DownloadString(Utilities.GetAlert("unsplash"));
-                }
-                if (json == "") return;
-                var dataObject = JsonConvert.DeserializeObject<dynamic>(json);
-                var result = dataObject[rnd.Next(0, 30)];
-
-                string url = result.urls.raw.ToString();
-                string avatar = context.User.GetAvatarUrl();
-
                 var embed = new EmbedBuilder();
                 embed.WithColor(0, 255, 0);
                 embed.WithTitle(":tada: LEVEL UP! :tada:");
@@ -48,9 +34,6 @@ namespace beanBot.Core.LevellingSystem
                 embed.WithFooter("Congratulations!");
 
                 await context.Channel.SendMessageAsync("", false, embed);
-
-
-                //$"**LEVEL UP!** {context.User.Mention} has just levelled up from level {oldLevel.ToString()} to level {userAccount.LevelNum.ToString()}! :tada:");
 
             }
 
